@@ -32,7 +32,7 @@ int main()
 
     //TODO Comment or uncomment function calls as required
     // CTRL+Click on function name to jump to its body
-    //demoStandardInputAndOutput();
+    demoStandardInputAndOutput();
     //demoPrimitiveTypes();
     //demoSizeofOperator();
     //demoLoops();
