@@ -1,5 +1,10 @@
-// sam02.cpp								January 2022
+// sam02.cpp								January 2023
 // Sample code for Lecture 1
+// Demonstrates:
+// Standard Input and Output
+// Data Types
+// Loops and Branching
+
 
 // Include some standard libraries in the program
 #include<stdio.h>   // Standard Input Output
@@ -7,8 +12,8 @@
 #include<string>    // string library
 #include<sstream>   // String Stream library
 
-using namespace std;	// makes the std namespace available throughout this file
-                        // so that we don't need to use the "std::" qualifier
+using namespace std;	// makes the "std" namespace available throughout this file
+                        // so that we don't need to repeatedly use the "std::" qualifier
 
 //  #define PI 3.14159;	// preprocessor will replace PI with 3.14159 throughout this file
 // just before it is compiled. (This was the old way to create constants)
@@ -28,7 +33,7 @@ void demoBranching();
 
 int main()
 {
-    cout << "Lecture 1 - Sample Code - remember to uncomment function calls!" << endl << endl;;
+    cout << "sam02 - Input/Output, Data Types, Loops, Branching" << endl << endl;;
 
     //TODO Comment or uncomment function calls as required
     // CTRL+Click on function name to jump to its body
@@ -41,30 +46,30 @@ int main()
 
 void demoStandardInputAndOutput()
 {
-    cout << "Enter your name:";
-
     //  The Stream Insertion Operator "operator<<" inserts the characters of the string
     //  on its right into the output stream called "cout".(Meaning "Console OUTput").
-    //  The output stream is directed at the console (screen),
+    //  The output stream "cout" is directed at the console (screen),
     //  so that is where you see the output displayed.
+
+    cout << "Enter your name:";
 
     string name;	// note lowercase "s" for string type (unlike Java)
 
     cin >> name;	//  the 'operator>>' is the stream extraction operator
 
-    //	"cin" == (Console INput)
+    //	"cin" means (Console INput)
     //	The "stream extraction operator>>" is used to extract characters
     //	from a source "cin" into a destination - the string 'name'.
     //	The "cin" stream represents the keyboard.
 
-    cout << "Welcome " << name << endl;  // '<<' is stream insertion operator
+    cout << "Welcome " << name << endl;  // '<<' stream insertion operators can be chained together
 
     int i;	// declare a variable i.  Note that it is NOT initialized (unlike in Java where it is set to 0)
     cout << "The uninitialized value in i is:" << i << endl;
     cout << "Please enter an integer value:";
     cin >> i;
 
-    //	cin represents the input stream of characters from the keyboard.
+    //	"cin" represents the input stream of characters from the keyboard.
     //	The extraction operator "operator>>" causes the system to wait for the user to
     //	type some digits on the keyboard (making up an integer value e.g. 243).
     //	When ENTER is typed, the "operator>>" extracts the characters from the input stream,
@@ -76,36 +81,39 @@ void demoStandardInputAndOutput()
 
     //TODO
     // What if we enter an invalid integer value? Try it. e.g. xv34, or 34xv,
+    // (ANS: it will mess up the input.)
 
     // Using getline() to read in a line of text at a time into a string variable
     // getline() will include whitespace characters
+
     string strLine; // a string variable to store the line of text
     cout << "Enter your full name (firstname  surname):";
     cin.ignore(); // flushes the input buffer (as previous cin leaves RETURN ('\n') in the input buffer)
 
     getline(cin, strLine);	// reads the full line of text entered
-    cout << "Hello " << strLine << ".\n";
+    cout << "Hello " << strLine << "\n";
 
     double price = 0;
     int quantity = 0;
-    cout << "Enter price (with decimal places):";
+    cout << "Enter price (with decimal places): ";
     getline(cin, strLine);			// read in the price as a string.
-    // we could validate the inputted price here to check that it is a valid double value
+    // we could (and should) validate the inputted price here to check that it is a valid double value
+
 
     stringstream(strLine) >> price;	// convert string to a stringstream and extract/convert to a double
     /*
         Explanation:
         1. stringstream(strLine) creates a stringstream object from the 'strLine' string.
-        2. The extraction operator determines that it needs to extract the data
+        2. The extraction operator>> determines that it needs to extract the data
            as type double (because 'price' is of type double).
         3. ">>" extracts the value from stringstream , assuming it is a double, and assigns it to price.
-        (More detail on how this works at a later pint)
+        (More detail on how this works at a later point)
     */
 
     cout << "Enter quantity: ";
     getline(cin, strLine);
     stringstream(strLine) >> quantity;
-    cout << "Total price:" << price * quantity << endl;
+    cout << "Total price: " << price * quantity << endl;
 
     // Best Practice - always use getline() to read in values,
     // then, ideally validate, and convert to the required type.
@@ -123,35 +131,35 @@ void demoStandardInputAndOutput()
 
 void demoPrimitiveTypes()
 {
-    cout << "Primitve Data Types" << endl;
+    cout << "Primitive Data Types" << endl;
 
-    char c = 'y';		// a char stores one ASCII character (always 1 byte in length)
+    char c = 'y';		// a char stores one ASCII character (always 1 byte in length in C++)
     cout << "The character in c is: " << c << endl;
 
-    c = '\"';	// The "Escape" character '\"' represents a double quote
+    c = '\"';	// The "Escape" character \" represents a double quote
     // can we do without the backslash? Why not?
 
-    cout << "The escape character in char c is:" << c << endl;
+    cout << "The character in char c is: " << c << endl;
 
     int x = 234;		// 4-byte int, (is signed), so range is roughly -2 billion to +2 billion.
     x = -12345;			// negative integer value
 
-    unsigned int y = 433322211u;  // positive values only; range 0->4 billion
-    cout << "Value in unsigned int y=" << y << endl;;
+    unsigned int y = 433322211u;  // positive values only; range 0->4 billion, u for unsigned value
+    cout << "Value in unsigned int y = " << y << endl;;
 
-    //TODO - try out the following:
-    //y = -2;	// ERROR - will NOT store what we expected - why?
-    //cout << "y=-2  What does y store? y=" << y << endl;
+    //TODO - try out the following
+    // y = -2;	// ERROR - will NOT store what we expected - why?
+    // cout << "y=-2  What does y store? y=" << y << endl;
 
     double d = 23.18;
     d = 1.06e-19;	    // 1.06 x 10^-19 diameter of a Hydrogen atom (very small number!)
-    // i.e move decimal point to left by 19 places = 0.000000000000000000106
+    // i.e. move decimal point to left by 19 places = 0.000000000000000000106
 
-    cout << "The diameter of a Hydrogen atom is d=" << d << endl;
+    cout << "The diameter of a Hydrogen atom is d = " << d << endl;
 
     bool flag = true;	// true or false  (Java uses keyword 'boolean')
 
-    cout << "The value in the flag variable flag=" << flag << endl;
+    cout << "The value in the flag variable flag = " << flag << endl;
 
     // issues of Range and Precision are relevant for floating point numbers.
 }
